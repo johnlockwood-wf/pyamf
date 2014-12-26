@@ -293,13 +293,13 @@ cdef class Context(object):
 
         return 0
 
-    cpdef inline object getObject(self, Py_ssize_t ref):
+    cpdef object getObject(self, Py_ssize_t ref):
         return self.objects.getByReference(ref)
 
-    cpdef inline Py_ssize_t getObjectReference(self, object obj) except -2:
+    cpdef Py_ssize_t getObjectReference(self, object obj) except -2:
         return self.objects.getReferenceTo(obj)
 
-    cpdef inline Py_ssize_t addObject(self, object obj) except -1:
+    cpdef Py_ssize_t addObject(self, object obj) except -1:
         return self.objects.append(obj)
 
     cpdef object getClassAlias(self, object klass):
@@ -566,7 +566,7 @@ cdef class Encoder(Codec):
     cdef int writeMixedArray(self, object o) except -1:
         raise NotImplementedError
 
-    cdef inline int handleBasicTypes(self, object element, object py_type) except -1:
+    cdef int handleBasicTypes(self, object element, object py_type) except -1:
         """
         @return: 0 = handled, -1 = error, 1 = not handled
         """

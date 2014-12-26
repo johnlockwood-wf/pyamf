@@ -135,6 +135,7 @@ cdef class ClassDefinition(object):
         return 0
 
 
+@cython.final
 cdef class Context(codec.Context):
     """
     I hold the AMF3 context for en/decoding streams.
@@ -247,6 +248,7 @@ cdef class Context(codec.Context):
         return 0
 
 
+@cython.final
 cdef class Decoder(codec.Decoder):
     """
     Decodes an AMF3 data stream.
@@ -1026,7 +1028,7 @@ cdef class Encoder(codec.Encoder):
 
         return self.writeObject(proxy, 1)
 
-    cdef inline int handleBasicTypes(self, object element, object py_type) except -1:
+    cdef int handleBasicTypes(self, object element, object py_type) except -1:
         cdef int ret = codec.Encoder.handleBasicTypes(self, element, py_type)
 
         if ret == 1: # not handled

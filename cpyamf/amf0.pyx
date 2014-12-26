@@ -11,6 +11,8 @@ from cpython cimport *
 from libc.stdlib cimport *
 from libc.string cimport *
 
+cimport cython
+
 cdef extern from "math.h":
     float floor(float)
 
@@ -44,6 +46,7 @@ cdef object ASObject = pyamf.ASObject
 cdef object UnknownClassAlias = pyamf.UnknownClassAlias
 
 
+@cython.final
 cdef class Context(codec.Context):
     cdef amf3.Context amf3_context
 
@@ -56,6 +59,7 @@ cdef class Context(codec.Context):
         return 0
 
 
+@cython.final
 cdef class Decoder(codec.Decoder):
     """
     """
@@ -582,7 +586,7 @@ cdef class Encoder(codec.Encoder):
         self.writeType(TYPE_AMF3)
         self.amf3_encoder.writeElement(o)
 
-    cdef inline int handleBasicTypes(self, object element, object py_type) except -1:
+    cdef int handleBasicTypes(self, object element, object py_type) except -1:
         if self.use_amf3:
             return self.writeAMF3(element)
 
